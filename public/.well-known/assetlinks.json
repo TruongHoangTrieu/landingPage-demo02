@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.blacksheep.kado",
+      "sha256_cert_fingerprints": [
+        "3E:8B:26:79:F1:E8:29:5F:4E:AB:6E:76:E2:BE:72:6E:7E:0E:19:04:24:BF:3A:7E:7E:3E:98:CA:25:35:65:15"
+      ]
+    }
+  }
+]
