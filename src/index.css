@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'Novecentosanswide';
+  src: url('/fonts/Novecentosanswide-Normal.otf') format('opentype');
+  font-weight: 400; /* Normal */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Novecentosanswide';
+  src: url('/fonts/Novecentosanswide-Light.otf') format('opentype');
+  font-weight: 300; /* Medium */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Novecentosanswide';
+  src: url('/fonts/Novecentosanswide-DemiBold.otf') format('opentype');
+  font-weight: 600; /* Bold */
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -116,5 +141,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Novecentosanswide', sans-serif;
   }
 }

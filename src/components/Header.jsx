@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { Sparkles, Layers, Download } from "lucide-react";
 import { AnimatedBadge } from "./Effect/AnimatedBadge";
@@ -12,6 +13,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ===== THAY ĐỔI 1: Đã xóa item "Tải xuống" khỏi mảng này =====
   const menuItems = [
     {
       label: "Tính năng",
@@ -19,11 +21,6 @@ export default function Header() {
       icon: <Sparkles className="w-5 h-5" />,
     },
     { label: "Thẻ bài", href: "#cards", icon: <Layers className="w-5 h-5" /> },
-    {
-      label: "Tải xuống",
-      href: "#download",
-      icon: <Download className="w-5 h-5" />,
-    },
   ];
 
   return (
@@ -68,7 +65,12 @@ export default function Header() {
               </a>
             ))}
 
-            <a href="#download" className="ml-3">
+            {/* ===== THAY ĐỔI 2: Gắn link APK và 'download' cho nút desktop ===== */}
+            <a
+              href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/kado.apk"
+              download
+              className="ml-3"
+            >
               <AnimatedBadge text="Tải ứng dụng" />
             </a>
           </div>
@@ -103,6 +105,7 @@ export default function Header() {
           }`}
         >
           <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 space-y-3">
+            {/* Vòng lặp này giờ sẽ không render "Tải xuống" nữa */}
             {menuItems.map((item, index) => (
               <a
                 key={index}
@@ -114,8 +117,10 @@ export default function Header() {
               </a>
             ))}
 
+            {/* ===== THAY ĐỔI 3: Gắn link APK và 'download' cho nút mobile ===== */}
             <a
-              href="#download"
+              href="/kado.apk"
+              download
               onClick={() => setMobileMenuOpen(false)}
               className="block text-center bg-gradient-to-r from-orange-500 to-rose-500 text-white py-3 rounded-xl font-semibold shadow-[0_4px_16px_rgba(249,115,22,0.4)] mt-3"
             >

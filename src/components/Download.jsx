@@ -56,13 +56,18 @@ export default function DownloadSection() {
         viewport={{ once: true }}
         className="relative z-10 mt-10"
       >
-        <motion.button
+        {/* ===== BLOCKS ĐÃ THAY ĐỔI ===== */}
+        <motion.a
+         href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/kado.apk"
+          download
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
+          // Giữ nguyên className để style giống hệt button
           className="bg-[#38bdf8] text-white font-semibold px-10 py-4 rounded-full shadow-lg hover:bg-[#0ea5e9] transition duration-300"
         >
           Tải ứng dụng
-        </motion.button>
+        </motion.a>
+        {/* ============================== */}
       </motion.div>
     </section>
   );

@@ -166,7 +166,7 @@ const features = [
 // =============== COMPONENT CHÍNH ===============
 export default function BentoGridCom() {
   return (
-    <section
+    <section id="features"
       className="w-full p-4 sm:p-6 lg:p-8 bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage:

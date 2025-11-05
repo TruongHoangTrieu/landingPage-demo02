@@ -1,28 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Header from './components/Header'
-import HeroSection from './components/HeroSection'
-import Collection from './components/Collection'
-import Introduction from './components/Introduction'
-import FeaturesSection from './components/Features'
-import DownloadSection from './components/Download'
-import Footer2 from './components/Footer'
+import { useRef } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import Collection from "./components/Collection";
+import Introduction from "./components/Introduction";
+import FeaturesSection from "./components/Features";
+import DownloadSection from "./components/Download";
+import Footer2 from "./components/Footer";
 
 function App() {
+  const heroIntroRef = useRef(null);
+
+  const scrollToHeroIntro = () => {
+    heroIntroRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
       <Header />
-      <HeroSection />
-      <Introduction />
+      <HeroSection onScrollDown={scrollToHeroIntro} />
+      <div ref={heroIntroRef}>
+        <Introduction />
+      </div>
       <Collection />
       <FeaturesSection />
       <DownloadSection />
       <Footer2 />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

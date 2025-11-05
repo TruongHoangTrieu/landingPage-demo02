@@ -5,13 +5,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { motion } from "framer-motion";
-import ThreeDCard from "./Effect/ThreeDCard";
 
 const slides = [
+  // ... (dữ liệu slides không đổi)
   {
     id: 1,
     bg: "https://i.redd.it/extended-card-art-wallpapers-part-2-v0-m9rryk6yk0nb1.jpg?width=3841&format=pjpg&auto=webp&s=bf36300668878c327c2bf2f736de1335ee92283a",
     card: "https://images.pokemoncard.io/images/swsh8/swsh8-269_hiresopt.jpg",
+    cardBack: "/poke-back.png",
     logo: "https://tcg.pokemon.com/assets/img/global/logos/en-us/tcg-logo.png",
     title: "Pokémon TCG",
     subtitle:
@@ -25,6 +26,7 @@ const slides = [
     id: 2,
     bg: "https://en.onepiece-cardgame.com/renewal/images/top/mv/st26/mv.webp",
     card: "https://en.onepiece-cardgame.com/images/cardlist/card/OP09-061_p2.png?251003",
+    cardBack: "/onepiece-back.png",
     logo: "/one-piece-logo.png",
     title: "One Piece Card Game",
     subtitle:
@@ -38,6 +40,7 @@ const slides = [
     id: 3,
     bg: "https://cdn.wallpapersafari.com/37/82/PczlZd.png",
     card: "https://ygovietnamcdn.azureedge.net/storage/Card/46986414.jpg",
+    cardBack: "/yugi-back.png",
     logo: "https://img.yugioh-card.com/en/wp-content/uploads/2020/04/logo-main.png",
     title: "Yu-Gi-Oh! Trading Card Game",
     subtitle:
@@ -53,12 +56,14 @@ const HeroCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="relative w-full h-[90vh] overflow-hidden bg-black">
+    // ===== THAY ĐỔI 1: Bỏ min-h và h-auto ở đây =====
+    <div id="cards" className="relative w-full overflow-hidden bg-black">
+      {/* Tiêu đề không đổi */}
       <div
         className="absolute top-10 left-1/2 -translate-x-1/2 
-bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 "
+bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-auto"
       >
-        <h2 className="text-3xl md:text-5xl font-extrabold text-white text-center">
+        <h2 className="text-2xl md:text-5xl font-extrabold text-white text-center">
           Hỗ trợ 3 loại thẻ bài phổ biến
         </h2>
       </div>
@@ -70,19 +75,22 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 "
         navigation
         loop
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        className="w-full h-full"
+        // ===== THAY ĐỔI 2: Áp min-h-[90vh] cho Swiper =====
+        className="w-full min-h-[90vh] mobile-nav-hide"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
+            {/* ===== THAY ĐỔI 3: Áp min-h-[90vh] cho div của slide (thay h-full) ===== */}
             <div
-              className="relative w-full h-full flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-16 bg-center bg-no-repeat bg-cover"
+              className="relative w-full min-h-[90vh] flex flex-col-reverse md:flex-row items-center justify-center md:justify-between px-6 md:px-16 pt-32 pb-16 md:pt-28 md:pb-0 gap-8 md:gap-0"
               style={{
                 backgroundImage: `url(${slide.bg})`,
                 backgroundPosition: "center center",
+                backgroundSize: "cover",
               }}
             >
-              {/* Bên trái: logo, text, nút */}
-              <div className="relative z-10 flex-1 flex flex-col gap-4 md:gap-5 text-center md:text-left text-white max-w-xl mt-10 md:mt-0 ml-0 md:ml-32">
+              {/* (Bên trái: text, logo... không đổi) */}
+              <div className="relative z-10 flex-1 flex flex-col gap-4 md:gap-5 text-center md:text-left text-white max-w-xl ml-0 md:ml-32">
                 {slide.logo && (
                   <img
                     src={slide.logo}
@@ -90,17 +98,17 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 "
                     className="w-[200px] md:w-[220px] mx-auto md:mx-0 drop-shadow-lg mb-2"
                   />
                 )}
-                <h1 className="text-4xl md:text-5xl font-black text-yellow-400 drop-shadow-xl">
+                <h1 className="text-3xl md:text-5xl font-black text-yellow-400 drop-shadow-xl">
                   {slide.title}
                 </h1>
-                <p className="text-4xl md:text-2xl  font-black text-gray-200 leading-relaxed">
+                <p className="text-lg md:text-2xl font-black text-gray-200 leading-relaxed">
                   {slide.subtitle}
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
                   {slide.buttons.map((btn, i) => (
                     <button
                       key={i}
-                      className={`${btn.color} text-black font-bold px-5 py-3 rounded-full shadow-md hover:opacity-90 transition`}
+                      className={`${btn.color} text-black font-bold px-5 py-3 rounded-full shadow-md hover:opacity-90 transition text-sm md:text-base`}
                     >
                       {btn.text}
                     </button>
@@ -108,37 +116,71 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 "
                 </div>
               </div>
 
-              {/* Bên phải: card */}
-              <div className="relative z-10 flex-1 flex justify-center md:justify-end mt-10 md:mt-0">
-                {/* 🎮 Khi đổi slide → card xoay 360 độ */}
-                <motion.div
-                  key={
-                    activeIndex === index
-                      ? `card-${slide.id}`
-                      : `card-inactive-${slide.id}`
-                  }
-                  initial={{ rotateY: 0 }}
-                  animate={{ rotateY: activeIndex === index ? 360 : 0 }}
-                  transition={{ duration: 1.2, ease: "easeInOut" }}
+              {/* (Bên phải: card... không đổi) */}
+              <div className="relative z-10 flex-1 flex justify-center md:justify-end">
+                <div
                   className="w-[260px] h-[360px] sm:w-[320px] sm:h-[460px] md:w-[400px] md:h-[550px] md:-translate-x-10 lg:-translate-x-16"
+                  style={{ perspective: "1200px" }}
                 >
-                  <ThreeDCard
-                    backgroundImage={slide.card}
-                    maxRotation={45}
-                    glowOpacity={0.8}
+                  <motion.div
+                    key={
+                      activeIndex === index
+                        ? `card-${slide.id}`
+                        : `card-inactive-${slide.id}`
+                    }
+                    initial={{ rotateY: 0 }}
+                    animate={{ rotateY: 360 }}
+                    transition={{ duration: 1.2, ease: "easeInOut" }}
+                    className="relative w-full h-full"
+                    style={{ transformStyle: "preserve-3d" }}
                   >
-                    <img
-                      src={slide.card}
-                      alt="Card"
-                      className="w-full h-full object-contain rounded-2xl pointer-events-none"
-                    />
-                  </ThreeDCard>
-                </motion.div>
+                    {/* Mặt trước */}
+                    <div
+                      className="absolute w-full h-full"
+                      style={{ backfaceVisibility: "hidden" }}
+                    >
+                      <img
+                        src={slide.card}
+                        alt="Card Front"
+                        className="w-full h-full object-contain rounded-2xl pointer-events-none"
+                      />
+                    </div>
+
+                    {/* Mặt sau */}
+                    <div
+                      className="absolute w-full h-full"
+                      style={{
+                        backfaceVisibility: "hidden",
+                        transform: "rotateY(180deg)",
+                      }}
+                    >
+                      <img
+                        src={slide.cardBack}
+                        alt="Card Back"
+                        className="w-full h-full object-contain rounded-2xl pointer-events-none"
+                      />
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* (Style ẩn mũi tên không đổi) */}
+      <style>{`
+        .mobile-nav-hide .swiper-button-next,
+        .mobile-nav-hide .swiper-button-prev {
+          display: none;
+        }
+        @media (min-width: 768px) {
+          .mobile-nav-hide .swiper-button-next,
+          .mobile-nav-hide .swiper-button-prev {
+            display: flex;
+          }
+        }
+      `}</style>
     </div>
   );
 };
