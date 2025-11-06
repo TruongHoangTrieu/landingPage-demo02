@@ -58,7 +58,7 @@ export default function DownloadSection() {
       >
         {/* ===== BLOCKS ĐÃ THAY ĐỔI ===== */}
         <motion.a
-         href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/kado.apk"
+         href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
           download
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
