@@ -1,10 +1,9 @@
-"use client";
 
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Camera, TrendingUp, Users, Shield, Zap, Database } from "lucide-react";
 
-// =============== COMPONENT GỐC ===============
+
 const ArrowRightIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +88,6 @@ export const BentoCard = ({
   </div>
 );
 
-// =============== DỮ LIỆU TÍNH NĂNG ===============
 const features = [
   {
     Icon: Camera,
@@ -163,7 +161,6 @@ const features = [
   },
 ];
 
-// =============== COMPONENT CHÍNH ===============
 export default function BentoGridCom() {
   return (
     <section id="features"

@@ -1,4 +1,4 @@
-"use client";
+
 import React from "react";
 import { motion } from "framer-motion";
 
@@ -16,10 +16,9 @@ export default function DownloadSection() {
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Overlay làm mờ nền để dễ đọc chữ */}
+
       <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px]"></div>
 
-      {/* Nội dung chính */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +47,7 @@ export default function DownloadSection() {
         </ul>
       </motion.div>
 
-      {/* Nút bên dưới */}
+
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -56,18 +55,18 @@ export default function DownloadSection() {
         viewport={{ once: true }}
         className="relative z-10 mt-10"
       >
-        {/* ===== BLOCKS ĐÃ THAY ĐỔI ===== */}
+
         <motion.a
          href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
           download
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          // Giữ nguyên className để style giống hệt button
+
           className="bg-[#38bdf8] text-white font-semibold px-10 py-4 rounded-full shadow-lg hover:bg-[#0ea5e9] transition duration-300"
         >
           Tải ứng dụng
         </motion.a>
-        {/* ============================== */}
+
       </motion.div>
     </section>
   );

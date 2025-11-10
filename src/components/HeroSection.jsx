@@ -1,7 +1,6 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
 
-// (AuroraText component không đổi)
 const AuroraText = ({ children, className }) => {
   return (
     <span
@@ -23,19 +22,14 @@ const HeroSection = ({ onScrollDown }) => {
         fontFamily: '"Poppins", YuGothic, -apple-system, sans-serif',
       }}
     >
-      {/* Overlay */}
       <div
         className="absolute inset-0 bg-black/30 z-0"
         aria-hidden="true"
       ></div>
-
-      {/* Nội dung Hero */}
       <div className="relative z-10 flex flex-col justify-center items-center px-6 md:px-16 text-white">
-        {" "}
-        {/* <-- THAY ĐỔI PADDING */}
+
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
           {" "}
-          {/* <-- THAY ĐỔI FONT SIZE */}
           Chào mừng đến với{" "}
           <AuroraText
             speed={1.5}
@@ -46,14 +40,11 @@ const HeroSection = ({ onScrollDown }) => {
           </AuroraText>
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-white/90 font-bold max-w-3xl">
-          {" "}
-          {/* <-- THAY ĐỔI FONT SIZE (và sửa lỗi logic 4xl -> 2xl) */}
           Nền tảng giao lưu, sưu tầm và trao đổi thẻ bài TCG tại Việt Nam.
         </p>
         <div>
           <button
             onClick={onScrollDown}
-            // <-- THAY ĐỔI FONT VÀ PADDING CHO MOBILE -->
             className="text-lg md:text-xl bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold py-3 px-8 md:py-4 md:px-10 rounded-full transition-all duration-300 shadow-2xl hover:shadow-orange-500/50 hover:-translate-y-1 hover:scale-105"
           >
             Tìm Hiểu Ngay
@@ -61,7 +52,6 @@ const HeroSection = ({ onScrollDown }) => {
         </div>
       </div>
 
-      {/* Nút cuộn xuống (Chevron) */}
       <button
         onClick={onScrollDown}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 group"

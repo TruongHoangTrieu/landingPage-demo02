@@ -7,7 +7,6 @@ import "swiper/css/navigation";
 import { motion } from "framer-motion";
 
 const slides = [
-  // ... (dữ liệu slides không đổi)
   {
     id: 1,
     bg: "https://i.redd.it/extended-card-art-wallpapers-part-2-v0-m9rryk6yk0nb1.jpg?width=3841&format=pjpg&auto=webp&s=bf36300668878c327c2bf2f736de1335ee92283a",
@@ -56,9 +55,7 @@ const HeroCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    // ===== THAY ĐỔI 1: Bỏ min-h và h-auto ở đây =====
     <div id="cards" className="relative w-full overflow-hidden bg-black">
-      {/* Tiêu đề không đổi */}
       <div
         className="absolute top-10 left-1/2 -translate-x-1/2 
 bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-auto"
@@ -75,12 +72,10 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
         navigation
         loop
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        // ===== THAY ĐỔI 2: Áp min-h-[90vh] cho Swiper =====
         className="w-full min-h-[90vh] mobile-nav-hide"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
-            {/* ===== THAY ĐỔI 3: Áp min-h-[90vh] cho div của slide (thay h-full) ===== */}
             <div
               className="relative w-full min-h-[90vh] flex flex-col-reverse md:flex-row items-center justify-center md:justify-between px-6 md:px-16 pt-32 pb-16 md:pt-28 md:pb-0 gap-8 md:gap-0"
               style={{
@@ -89,7 +84,6 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                 backgroundSize: "cover",
               }}
             >
-              {/* (Bên trái: text, logo... không đổi) */}
               <div className="relative z-10 flex-1 flex flex-col gap-4 md:gap-5 text-center md:text-left text-white max-w-xl ml-0 md:ml-32">
                 {slide.logo && (
                   <img
@@ -116,7 +110,6 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                 </div>
               </div>
 
-              {/* (Bên phải: card... không đổi) */}
               <div className="relative z-10 flex-1 flex justify-center md:justify-end">
                 <div
                   className="w-[260px] h-[360px] sm:w-[320px] sm:h-[460px] md:w-[400px] md:h-[550px] md:-translate-x-10 lg:-translate-x-16"
@@ -134,7 +127,6 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                     className="relative w-full h-full"
                     style={{ transformStyle: "preserve-3d" }}
                   >
-                    {/* Mặt trước */}
                     <div
                       className="absolute w-full h-full"
                       style={{ backfaceVisibility: "hidden" }}
@@ -146,7 +138,6 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                       />
                     </div>
 
-                    {/* Mặt sau */}
                     <div
                       className="absolute w-full h-full"
                       style={{
@@ -167,8 +158,6 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* (Style ẩn mũi tên không đổi) */}
       <style>{`
         .mobile-nav-hide .swiper-button-next,
         .mobile-nav-hide .swiper-button-prev {
