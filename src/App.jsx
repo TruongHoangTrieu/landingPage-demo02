@@ -1,32 +1,20 @@
-import { useRef } from "react";
+
 import "./App.css";
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import Collection from "./components/Collection";
-import Introduction from "./components/Introduction";
-import FeaturesSection from "./components/Features";
-import DownloadSection from "./components/Download";
-import Footer2 from "./components/Footer";
+import HomePage from "../src/pages/HomePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage";
+import OTPVerificationPage from "./pages/OTPVerificationPage";
 
 function App() {
-  const heroIntroRef = useRef(null);
-
-  const scrollToHeroIntro = () => {
-    heroIntroRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <>
-      <Header />
-      <HeroSection onScrollDown={scrollToHeroIntro} />
-      <div ref={heroIntroRef}>
-        <Introduction />
-      </div>
-      <Collection />
-      <FeaturesSection />
-      <DownloadSection />
-      <Footer2 />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/otp" element={<OTPVerificationPage />} />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 

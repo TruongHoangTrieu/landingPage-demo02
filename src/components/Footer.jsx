@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import logo from "/kado.png"; 
@@ -83,10 +82,9 @@ export default function Footer2() {
   return (
     <footer className="py-10 px-4 sm:px-6 lg:px-8 font-inter relative overflow-hidden bg-white dark:bg-[#0f0f0f]">
       <div className="max-w-7xl mx-auto flex flex-col items-center relative z-10">
-        {/* 🔹 Logo + Tên thương hiệu */}
         <div className="mb-6 flex items-center justify-center">
           <img
-            src={logo} // hoặc "/logo.png"
+            src={logo} 
             alt="KĀDO Logo"
             className="w-12 h-12 mr-3 drop-shadow-lg object-contain"
           />
@@ -95,7 +93,6 @@ export default function Footer2() {
           </span>
         </div>
 
-        {/* 🔹 Navigation */}
         <nav className="mb-6 w-full">
           <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-base font-medium">
             {navLinks.map((link) => (
@@ -111,7 +108,6 @@ export default function Footer2() {
           </ul>
         </nav>
 
-        {/* 🔹 Social icons */}
         <div className="my-6 flex flex-wrap justify-center gap-4 text-sm">
           {socialIcons.map((icon) => (
             <a
@@ -127,7 +123,6 @@ export default function Footer2() {
           ))}
         </div>
 
-        {/* 🔹 Footer text */}
         <p className="text-center text-xs text-gray-500 dark:text-gray-500 mt-4">
           &copy; {new Date().getFullYear()} KĀDO. All rights reserved.
         </p>
