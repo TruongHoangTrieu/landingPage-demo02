@@ -139,7 +139,7 @@ export default function Header() {
                 <span>Đăng ký</span>
               </button>
               <a
-                href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
+                href="https://api.expo.dev/v2/artifacts/eas/g1LwqbibZeAkgq9Tc2v6GA"
                 download
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-center bg-gradient-to-r from-orange-500 to-rose-500 text-white py-3 rounded-xl font-semibold shadow-[0_4px_16px_rgba(249,115,22,0.4)] mt-3"
