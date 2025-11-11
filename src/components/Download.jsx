@@ -57,7 +57,7 @@ export default function DownloadSection() {
       >
 
         <motion.a
-         href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
+         href="hhttps://api.expo.dev/v2/artifacts/eas/g1LwqbibZeAkgq9Tc2v6GA"
           download
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}

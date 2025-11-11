@@ -24,14 +24,7 @@ const HeroIntro = () => {
           cộng đồng người chơi trên khắp thế giới.
         </p>
 
-        <div className="flex flex-col md:flex-row flex-wrap gap-4">
-          <button className="bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-200 transition">
-            Hướng Dẫn Cho Người Mới →
-          </button>
-          <button className="bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-200 transition">
-            Cách Chơi →
-          </button>
-        </div>
+        
       </div>
     </section>
   );

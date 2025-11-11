@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { User, Mail, Lock, Eye, Calendar, Key, Edit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; 
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null); 
   const navigate = useNavigate();
   const { register, loading } = useRegister();
 
@@ -36,6 +33,16 @@ export default function RegisterPage() {
       required: true,
     },
     {
+      name: "dob",
+      placeholder: "Ngày sinh (YYYY-MM-DD)", // Đã cập nhật placeholder để hướng dẫn định dạng
+      icon: Calendar,
+      type: "text", // <-- Đã thay đổi từ "date" sang "text"
+      required: true,
+      // Bạn có thể thêm pattern nếu muốn ép buộc định dạng nhập liệu
+      // pattern: "\\d{4}-\\d{2}-\\d{2}", // Ví dụ: YYYY-MM-DD
+      // title: "Vui lòng nhập ngày sinh theo định dạng YYYY-MM-DD",
+    },
+    {
       name: "password",
       placeholder: "Mật khẩu",
       icon: Lock,
@@ -61,37 +68,54 @@ export default function RegisterPage() {
     e.preventDefault();
 
     const form = e.target;
-
-
-    const dateOfBirth = selectedDate
-      ? selectedDate.toISOString().split("T")[0] 
-      : null;
-
-    if (!dateOfBirth) {
-        alert("Vui lòng chọn Ngày sinh!");
-        return;
-    }
-
     const data = {
       email: form.email.value,
       username: form.username.value,
       password: form.password.value,
       firstName: form.ten.value,
       lastName: form.ho.value,
-      dateOfBirth: dateOfBirth, 
+      dateOfBirth: form.dob.value,
     };
 
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
       alert("Email không hợp lệ!");
       return;
     }
 
+    // --- BỔ SUNG VALIDATION CHO NGÀY SINH (khi type="text") ---
+    // Ví dụ: Kiểm tra định dạng YYYY-MM-DD
+    const dobRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dobRegex.test(data.dateOfBirth)) {
+      alert("Ngày sinh không hợp lệ. Vui lòng nhập theo định dạng YYYY-MM-DD!");
+      return;
+    }
+    // Bạn cũng có thể thêm logic kiểm tra ngày tháng hợp lệ (vd: 30/02)
+    const dateParts = data.dateOfBirth.split('-');
+    const year = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1; // Tháng trong JS Date là từ 0-11
+    const day = parseInt(dateParts[2]);
+    const dateObj = new Date(year, month, day);
+
+    if (dateObj.getFullYear() !== year || dateObj.getMonth() !== month || dateObj.getDate() !== day) {
+        alert("Ngày sinh không tồn tại. Vui lòng kiểm tra lại!");
+        return;
+    }
+    // Đảm bảo không chọn ngày trong tương lai
+    if (dateObj > new Date()) {
+        alert("Ngày sinh không thể là ngày trong tương lai!");
+        return;
+    }
+    // --------------------------------------------------------
+
+    // Validate password length
     if (data.password.length < 8) {
       alert("Mật khẩu phải có ít nhất 8 ký tự!");
       return;
     }
 
+    // Validate password has at least one uppercase and one lowercase letter
     const hasUpperCase = /[A-Z]/.test(data.password);
     const hasLowerCase = /[a-z]/.test(data.password);
     if (!hasUpperCase || !hasLowerCase) {
@@ -108,7 +132,7 @@ export default function RegisterPage() {
     try {
       const response = await register(data);
       if (response.success) {
-        
+        // Navigate to OTP page with email
         navigate("/otp-verification", { state: { email: data.email } });
       } else {
         alert(response.message || "Đăng ký thất bại!");
@@ -122,7 +146,7 @@ export default function RegisterPage() {
   const inputStyle =
     "w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-base focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none text-gray-800";
   const iconStyle =
-    "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10"; // Thêm z-index
+    "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400";
   const buttonStyle =
     "w-full py-3 px-4 text-lg font-bold text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 transition-colors shadow-lg mt-6";
 
@@ -172,12 +196,17 @@ export default function RegisterPage() {
                       minLength={field.minLength}
                       autoCapitalize="none"
                       autoCorrect="off"
+                      // Pattern cho email và password vẫn giữ nguyên.
+                      // Nếu bạn thêm pattern cho dob, bạn có thể thêm vào đây:
+                      // field.name === "dob" ? "\\d{4}-\\d{2}-\\d{2}" : undefined
                       pattern={
                         field.name === "email"
                           ? "[^\\s@]+@[^\\s@]+\\.[^\\s@]+"
                           : field.name === "password" ||
                             field.name === "confirmPassword"
                           ? "(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                          : field.name === "dob" // <-- Thêm pattern cho DOB nếu muốn
+                          ? "^\\d{4}-\\d{2}-\\d{2}$" // Ví dụ định dạng YYYY-MM-DD
                           : undefined
                       }
                       title={
@@ -186,6 +215,8 @@ export default function RegisterPage() {
                           : field.name === "password" ||
                             field.name === "confirmPassword"
                           ? "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa và chữ thường"
+                          : field.name === "dob" // <-- Thêm title cho DOB nếu muốn
+                          ? "Vui lòng nhập ngày sinh theo định dạng YYYY-MM-DD"
                           : field.minLength
                           ? `Tối thiểu ${field.minLength} ký tự`
                           : undefined
@@ -195,7 +226,7 @@ export default function RegisterPage() {
                       <button
                         type="button"
                         onClick={() => field.toggleShow(!field.showState)}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition z-10" // Thêm z-index
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition"
                         aria-label={
                           field.showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
                         }
@@ -206,25 +237,6 @@ export default function RegisterPage() {
                   </div>
                 );
               })}
-              
-              
-              <div className="relative">
-                <Calendar className={iconStyle} />
-                <DatePicker
-                  selected={selectedDate} 
-                  onChange={(date) => setSelectedDate(date)} 
-                  name="dob" 
-                  placeholderText="Ngày sinh (dd/mm/yyyy)" 
-                  dateFormat="dd/MM/yyyy" 
-                  required
-                  className={inputStyle} 
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  maxDate={new Date()} 
-                />
-              </div>
 
               <button
                 type="submit"

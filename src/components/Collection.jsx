@@ -17,8 +17,7 @@ const slides = [
     subtitle:
       "Thu thập, chiến đấu và khám phá thế giới Pokémon với hàng nghìn lá bài độc đáo và hiếm có.",
     buttons: [
-      { text: "Khám phá bộ sưu tập", color: "bg-yellow-400" },
-      { text: "Xem tất cả thẻ", color: "bg-cyan-400" },
+
     ],
   },
   {
@@ -31,8 +30,7 @@ const slides = [
     subtitle:
       "Tập hợp đồng đội, triển khai chiến lược và trở thành Vua Hải Tặc trong thế giới One Piece!",
     buttons: [
-      { text: "Khám phá thẻ bài", color: "bg-red-500" },
-      { text: "Xem chi tiết bộ mở rộng", color: "bg-yellow-400" },
+      
     ],
   },
   {
@@ -45,8 +43,6 @@ const slides = [
     subtitle:
       "Triệu hồi quái thú, kích hoạt ma pháp, tung bẫy và chiến thắng đối thủ trong đấu trường hấp dẫn nhất!",
     buttons: [
-      { text: "Khám phá bài Yu-Gi-Oh!", color: "bg-purple-500" },
-      { text: "Xem gallery", color: "bg-yellow-400" },
     ],
   },
 ];
@@ -98,16 +94,7 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                 <p className="text-lg md:text-2xl font-black text-gray-200 leading-relaxed">
                   {slide.subtitle}
                 </p>
-                <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
-                  {slide.buttons.map((btn, i) => (
-                    <button
-                      key={i}
-                      className={`${btn.color} text-black font-bold px-5 py-3 rounded-full shadow-md hover:opacity-90 transition text-sm md:text-base`}
-                    >
-                      {btn.text}
-                    </button>
-                  ))}
-                </div>
+                
               </div>
 
               <div className="relative z-10 flex-1 flex justify-center md:justify-end">
