@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { User, Mail, Lock, Eye, Calendar, Key, Edit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; 
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null); 
   const navigate = useNavigate();
   const { register, loading } = useRegister();
 
@@ -30,13 +33,6 @@ export default function RegisterPage() {
       placeholder: "Tên tài khoản (chỉ chữ, số, gạch dưới)",
       icon: Edit,
       type: "text",
-      required: true,
-    },
-    {
-      name: "dob",
-      placeholder: "Ngày sinh",
-      icon: Calendar,
-      type: "date",
       required: true,
     },
     {
@@ -65,29 +61,37 @@ export default function RegisterPage() {
     e.preventDefault();
 
     const form = e.target;
+
+
+    const dateOfBirth = selectedDate
+      ? selectedDate.toISOString().split("T")[0] 
+      : null;
+
+    if (!dateOfBirth) {
+        alert("Vui lòng chọn Ngày sinh!");
+        return;
+    }
+
     const data = {
       email: form.email.value,
       username: form.username.value,
       password: form.password.value,
       firstName: form.ten.value,
       lastName: form.ho.value,
-      dateOfBirth: form.dob.value,
+      dateOfBirth: dateOfBirth, 
     };
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
       alert("Email không hợp lệ!");
       return;
     }
 
-    // Validate password length
     if (data.password.length < 8) {
       alert("Mật khẩu phải có ít nhất 8 ký tự!");
       return;
     }
 
-    // Validate password has at least one uppercase and one lowercase letter
     const hasUpperCase = /[A-Z]/.test(data.password);
     const hasLowerCase = /[a-z]/.test(data.password);
     if (!hasUpperCase || !hasLowerCase) {
@@ -104,7 +108,7 @@ export default function RegisterPage() {
     try {
       const response = await register(data);
       if (response.success) {
-        // Navigate to OTP page with email
+        
         navigate("/otp-verification", { state: { email: data.email } });
       } else {
         alert(response.message || "Đăng ký thất bại!");
@@ -118,7 +122,7 @@ export default function RegisterPage() {
   const inputStyle =
     "w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-base focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none text-gray-800";
   const iconStyle =
-    "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400";
+    "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-10"; // Thêm z-index
   const buttonStyle =
     "w-full py-3 px-4 text-lg font-bold text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 transition-colors shadow-lg mt-6";
 
@@ -191,7 +195,7 @@ export default function RegisterPage() {
                       <button
                         type="button"
                         onClick={() => field.toggleShow(!field.showState)}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition"
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition z-10" // Thêm z-index
                         aria-label={
                           field.showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
                         }
@@ -202,6 +206,25 @@ export default function RegisterPage() {
                   </div>
                 );
               })}
+              
+              
+              <div className="relative">
+                <Calendar className={iconStyle} />
+                <DatePicker
+                  selected={selectedDate} 
+                  onChange={(date) => setSelectedDate(date)} 
+                  name="dob" 
+                  placeholderText="Ngày sinh (dd/mm/yyyy)" 
+                  dateFormat="dd/MM/yyyy" 
+                  required
+                  className={inputStyle} 
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  maxDate={new Date()} 
+                />
+              </div>
 
               <button
                 type="submit"
