@@ -1,14 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useRegister } from "../hooks/useRegister";
 
-export default function OTPVerificationPage({ email = "tr*****03@gmail.com" }) {
+export default function OTPVerificationPage() {
   const OTP_LENGTH = 6;
   const [otp, setOtp] = useState(new Array(OTP_LENGTH).fill(""));
   const inputRefs = useRef([]);
   const [isResendDisabled, setIsResendDisabled] = useState(false);
   const [resendTimer, setResendTimer] = useState(60);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { verifyEmail, loading } = useRegister();
+
+  // Get email from navigation state
+  const email = location.state?.email || "tr*****03@gmail.com";
 
   const KADO_YELLOW = "bg-yellow-400 hover:bg-yellow-500";
   const TEXT_YELLOW = "text-yellow-400";
@@ -50,13 +56,29 @@ export default function OTPVerificationPage({ email = "tr*****03@gmail.com" }) {
     setResendTimer(60);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const finalOtp = otp.join("");
-    if (finalOtp.length === OTP_LENGTH) {
-      alert(`Xác nhận OTP: ${finalOtp}`);
-    } else {
+    if (finalOtp.length !== OTP_LENGTH) {
       alert("Vui lòng nhập đủ 6 số.");
+      return;
+    }
+
+    try {
+      const response = await verifyEmail({
+        email: email,
+        otp: finalOtp,
+      });
+
+      if (response.success) {
+        // Navigate to success page
+        navigate("/email-verification-success");
+      } else {
+        alert(response.message || "Mã OTP không chính xác!");
+      }
+    } catch (error) {
+      console.error("OTP verification error:", error);
+      alert(error.message || "Có lỗi xảy ra khi xác thực OTP!");
     }
   };
 
@@ -125,8 +147,9 @@ export default function OTPVerificationPage({ email = "tr*****03@gmail.com" }) {
           <button
             type="submit"
             className={`w-full py-4 text-xl font-bold text-gray-900 ${KADO_YELLOW} rounded-xl shadow-lg mt-8 transition-colors duration-200`}
+            disabled={loading}
           >
-            XÁC NHẬN
+            {loading ? "ĐANG XÁC NHẬN..." : "XÁC NHẬN"}
           </button>
         </form>
 

@@ -1,35 +1,122 @@
-
 import React, { useState } from "react";
-import { User, Mail, Lock, Eye, Calendar, Key, Edit } from "lucide-react"; 
-import { useNavigate } from "react-router-dom"; 
+import { User, Mail, Lock, Eye, Calendar, Key, Edit } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useRegister } from "../hooks/useRegister";
+
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
+  const { register, loading } = useRegister();
 
   const fields = [
-    { name: "ten", placeholder: "Tên", icon: User, type: "text", required: true },
+    {
+      name: "ten",
+      placeholder: "Tên",
+      icon: User,
+      type: "text",
+      required: true,
+    },
     { name: "ho", placeholder: "Họ", icon: User, type: "text", required: true },
-    { name: "email", placeholder: "Nhập Email", icon: Mail, type: "email", required: true },
-    { name: "username", placeholder: "Tên đăng nhập (chỉ chữ, số, gạch dưới)", icon: Edit, type: "text", required: true },
-    { name: "dob", placeholder: "Ngày sinh (YYYY-MM-DD)", icon: Calendar, type: "text", required: true },
-    { name: "password", placeholder: "Mật khẩu", icon: Lock, isPassword: true, showState: showPassword, toggleShow: setShowPassword, required: true },
-    { name: "confirmPassword", placeholder: "Xác nhận Mật khẩu", icon: Key, isPassword: true, showState: showConfirmPassword, toggleShow: setShowConfirmPassword, required: true },
+    {
+      name: "email",
+      placeholder: "Nhập Email",
+      icon: Mail,
+      type: "email",
+      required: true,
+    },
+    {
+      name: "username",
+      placeholder: "Tên đăng nhập (chỉ chữ, số, gạch dưới)",
+      icon: Edit,
+      type: "text",
+      required: true,
+    },
+    {
+      name: "dob",
+      placeholder: "Ngày sinh",
+      icon: Calendar,
+      type: "date",
+      required: true,
+    },
+    {
+      name: "password",
+      placeholder: "Mật khẩu (tối thiểu 8 ký tự)",
+      icon: Lock,
+      isPassword: true,
+      showState: showPassword,
+      toggleShow: setShowPassword,
+      required: true,
+      minLength: 8,
+    },
+    {
+      name: "confirmPassword",
+      placeholder: "Xác nhận Mật khẩu (tối thiểu 8 ký tự)",
+      icon: Key,
+      isPassword: true,
+      showState: showConfirmPassword,
+      toggleShow: setShowConfirmPassword,
+      required: true,
+      minLength: 8,
+    },
   ];
 
-  const handleRegistrationSubmit = (e) => {
+  const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
-    alert("Đã gửi form Đăng ký!");
+
+    const form = e.target;
+    const data = {
+      email: form.email.value,
+      username: form.username.value,
+      password: form.password.value,
+      firstName: form.ten.value,
+      lastName: form.ho.value,
+      dateOfBirth: form.dob.value,
+    };
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      alert("Email không hợp lệ!");
+      return;
+    }
+
+    // Validate password length
+    if (data.password.length < 8) {
+      alert("Mật khẩu phải có ít nhất 8 ký tự!");
+      return;
+    }
+
+    // Validate password confirmation
+    if (form.password.value !== form.confirmPassword.value) {
+      alert("Mật khẩu xác nhận không khớp!");
+      return;
+    }
+
+    try {
+      const response = await register(data);
+      if (response.success) {
+        // Navigate to OTP page with email
+        navigate("/otp-verification", { state: { email: data.email } });
+      } else {
+        alert(response.message || "Đăng ký thất bại!");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(error.message || "Có lỗi xảy ra khi đăng ký!");
+    }
   };
-  
-  const inputStyle = "w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-base focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none text-gray-800";
-  const iconStyle = "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400";
-  const buttonStyle = "w-full py-3 px-4 text-lg font-bold text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 transition-colors shadow-lg mt-6";
+
+  const inputStyle =
+    "w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-base focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none text-gray-800";
+  const iconStyle =
+    "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400";
+  const buttonStyle =
+    "w-full py-3 px-4 text-lg font-bold text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 transition-colors shadow-lg mt-6";
 
   const handleLoginLinkClick = (e) => {
     e.preventDefault();
-    navigate('/'); 
+    navigate("/");
   };
 
   return (
@@ -43,16 +130,11 @@ export default function RegisterPage() {
         }}
       >
         <div className="absolute inset-0 bg-black/20 z-0"></div>
-        
       </div>
 
-      <div 
-        className="w-full lg:w-1/2 bg-white flex flex-col justify-center items-center p-4 sm:p-8"
-      >
+      <div className="w-full lg:w-1/2 bg-white flex flex-col justify-center items-center p-4 sm:p-8">
         <div className="max-w-md w-full p-6 sm:p-8">
-          
-          <div className="flex flex-col space-y-4"> 
-            
+          <div className="flex flex-col space-y-4">
             <div className="mb-4 text-center">
               <h1 className="text-3xl font-bold text-gray-900">
                 ĐĂNG KÝ TÀI KHOẢN
@@ -65,8 +147,12 @@ export default function RegisterPage() {
             <form onSubmit={handleRegistrationSubmit} className="space-y-3">
               {fields.map((field) => {
                 const Icon = field.icon;
-                const inputType = field.isPassword ? (field.showState ? "text" : "password") : (field.type || "text");
-                
+                const inputType = field.isPassword
+                  ? field.showState
+                    ? "text"
+                    : "password"
+                  : field.type || "text";
+
                 return (
                   <div key={field.name} className="relative">
                     <Icon className={iconStyle} />
@@ -76,13 +162,28 @@ export default function RegisterPage() {
                       name={field.name}
                       className={inputStyle}
                       required={field.required}
+                      minLength={field.minLength}
+                      pattern={
+                        field.name === "email"
+                          ? "[^\\s@]+@[^\\s@]+\\.[^\\s@]+"
+                          : undefined
+                      }
+                      title={
+                        field.name === "email"
+                          ? "Vui lòng nhập email hợp lệ"
+                          : field.minLength
+                          ? `Tối thiểu ${field.minLength} ký tự`
+                          : undefined
+                      }
                     />
                     {field.isPassword && (
                       <button
                         type="button"
                         onClick={() => field.toggleShow(!field.showState)}
                         className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition"
-                        aria-label={field.showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                        aria-label={
+                          field.showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
+                        }
                       >
                         <Eye className="w-5 h-5" />
                       </button>
@@ -90,22 +191,26 @@ export default function RegisterPage() {
                   </div>
                 );
               })}
-              
-              <button type="submit" className={buttonStyle + " mt-6"}>
-                TẠO TÀI KHOẢN
+
+              <button
+                type="submit"
+                className={buttonStyle + " mt-6"}
+                disabled={loading}
+              >
+                {loading ? "ĐANG TẠO TÀI KHOẢN..." : "TẠO TÀI KHOẢN"}
               </button>
             </form>
-            
-            <div className="text-center text-sm text-gray-600 pt-2">
-                Đã có tài khoản?
-                <a 
-                  href="/" 
-                  onClick={handleLoginLinkClick} 
-                  className="font-semibold text-yellow-400 hover:text-yellow-500 transition-colors"
-                >
-                    Đăng nhập
-                </a>
-            </div>
+
+            {/* <div className="text-center text-sm text-gray-600 pt-2">
+              Đã có tài khoản?
+              <a
+                href="/"
+                onClick={handleLoginLinkClick}
+                className="font-semibold text-yellow-400 hover:text-yellow-500 transition-colors"
+              >
+                Đăng nhập
+              </a>
+            </div> */}
           </div>
         </div>
       </div>
