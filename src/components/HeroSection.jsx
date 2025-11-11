@@ -19,7 +19,6 @@ const HeroSection = ({ onScrollDown }) => {
         backgroundImage: 'url("/background_KADO.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
-        fontFamily: '"Poppins", YuGothic, -apple-system, sans-serif',
       }}
     >
       <div
