@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sparkles, Layers, Download, CircleUser } from "lucide-react"; // 1. Import CircleUser
 import { AnimatedBadge } from "./Effect/AnimatedBadge";
 import ModalLogin from "./modal/Login";
@@ -7,6 +7,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -68,7 +69,6 @@ export default function Header() {
                 </a>
               ))}
 
-
               <div className="flex items-center gap-3 ml-3">
                 <a
                   href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
@@ -78,12 +78,12 @@ export default function Header() {
                 </a>
 
                 <button
-                  onClick={toggleLoginModal} 
-                  aria-label="Đăng nhập"
+                  // onClick={toggleLoginModal}
+                  onClick={() => navigate("/register")}
+                  aria-label="Đăng ký"
                   className="p-2 rounded-full text-white/90 hover:text-white transition-colors duration-300 hover:bg-white/10"
                 >
-                 
-                  <CircleUser className="w-9 h-9" /> 
+                  <CircleUser className="w-9 h-9" />
                 </button>
               </div>
             </div>
@@ -128,14 +128,15 @@ export default function Header() {
               ))}
 
               <button
-                  onClick={() => {
-                      setMobileMenuOpen(false); 
-                      toggleLoginModal();
-                  }}
-                  className="w-full flex items-center justify-center gap-2 bg-white/10 text-white py-3 rounded-xl font-semibold mt-3 transition-colors duration-300 hover:bg-white/20"
+                onClick={() => {
+                  // setMobileMenuOpen(false);
+                  // toggleLoginModal();
+                  navigate("/register");
+                }}
+                className="w-full flex items-center justify-center gap-2 bg-white/10 text-white py-3 rounded-xl font-semibold mt-3 transition-colors duration-300 hover:bg-white/20"
               >
-                  <CircleUser className="w-6 h-6" />
-                  <span>Đăng nhập</span>
+                <CircleUser className="w-6 h-6" />
+                <span>Đăng ký</span>
               </button>
               <a
                 href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
@@ -149,7 +150,6 @@ export default function Header() {
           </div>
         </nav>
       </header>
-
 
       {isLoginModalOpen && <ModalLogin onClose={toggleLoginModal} />}
     </>
