@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Layers, Download, CircleUser } from "lucide-react"; // 1. Import CircleUser
+import { Sparkles, Layers, Download, CircleUser } from "lucide-react";
 import { AnimatedBadge } from "./Effect/AnimatedBadge";
 import ModalLogin from "./modal/Login";
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,6 +28,11 @@ export default function Header() {
   const toggleLoginModal = () => {
     setIsLoginModalOpen(!isLoginModalOpen);
   };
+  
+  // 1. TẠO HÀM XỬ LÝ CHUYỂN HƯỚNG TẢI ỨNG DỤNG
+  const handleDownloadClick = () => {
+    navigate("/download");
+  };
 
   return (
     <>
@@ -39,8 +45,9 @@ export default function Header() {
       >
         <nav className="py-4 px-4 lg:px-8">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
+            {/* ... Phần Logo và Menu Items (Giữ nguyên) ... */}
             <a
-              href="#"
+              href="/"
               className="flex items-center gap-3 group transition-transform"
             >
               <div className="w-15 h-15 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 shadow-[0_4px_12px_rgba(102,126,234,0.4)] overflow-hidden flex items-center justify-center transform group-hover:scale-105 group-hover:-rotate-3 transition-transform duration-300">
@@ -70,12 +77,13 @@ export default function Header() {
               ))}
 
               <div className="flex items-center gap-3 ml-3">
-                <a
-                  href="https://github.com/TruongHoangTrieu/landingPage-demo02/releases/download/v1.0.0/KADO.apk"
-                  download
+                {/* 2. CHỈNH SỬA NÚT TẢI ỨNG DỤNG CHO PC/LAPTOP */}
+                {/* Thay thẻ <a> download bằng button onClick */}
+                <button
+                  onClick={handleDownloadClick} // Gán hàm chuyển hướng
                 >
                   <AnimatedBadge text="Tải ứng dụng" />
-                </a>
+                </button>
 
                 <button
                   // onClick={toggleLoginModal}
@@ -88,6 +96,7 @@ export default function Header() {
               </div>
             </div>
 
+            {/* ... Phần Mobile Menu Toggle (Giữ nguyên) ... */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden bg-white/10 border border-white/20 rounded-lg p-2 flex flex-col justify-center items-center space-y-1.5 transition duration-300"
@@ -110,6 +119,7 @@ export default function Header() {
             </button>
           </div>
 
+          {/* Mobile Menu */}
           <div
             className={`lg:hidden overflow-hidden transition-[max-height,margin-top] duration-500 ${
               mobileMenuOpen ? "max-h-96 mt-4" : "max-h-0 mt-0"
@@ -138,14 +148,18 @@ export default function Header() {
                 <CircleUser className="w-6 h-6" />
                 <span>Đăng ký</span>
               </button>
-              <a
-                href="https://api.expo.dev/v2/artifacts/eas/g1LwqbibZeAkgq9Tc2v6GA"
-                download
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center bg-gradient-to-r from-orange-500 to-rose-500 text-white py-3 rounded-xl font-semibold shadow-[0_4px_16px_rgba(249,115,22,0.4)] mt-3"
+              
+              {/* 3. CHỈNH SỬA NÚT TẢI ỨNG DỤNG TRONG MOBILE MENU */}
+              {/* Thay thẻ <a> download bằng button onClick và đóng menu */}
+              <button
+                onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleDownloadClick(); // Gọi hàm chuyển hướng
+                }}
+                className="w-full text-center bg-gradient-to-r from-orange-500 to-rose-500 text-white py-3 rounded-xl font-semibold shadow-[0_4px_16px_rgba(249,115,22,0.4)] mt-3"
               >
                 Tải ứng dụng
-              </a>
+              </button>
             </div>
           </div>
         </nav>

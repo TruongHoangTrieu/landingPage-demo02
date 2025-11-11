@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 
@@ -16,7 +15,6 @@ export default function DownloadSection() {
         backgroundAttachment: "fixed",
       }}
     >
-
       <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px]"></div>
 
       <motion.div
@@ -47,7 +45,6 @@ export default function DownloadSection() {
         </ul>
       </motion.div>
 
-
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -55,18 +52,14 @@ export default function DownloadSection() {
         viewport={{ once: true }}
         className="relative z-10 mt-10"
       >
-
         <motion.a
-         href="hhttps://api.expo.dev/v2/artifacts/eas/g1LwqbibZeAkgq9Tc2v6GA"
-          download
+          href="/download"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-
           className="bg-[#38bdf8] text-white font-semibold px-10 py-4 rounded-full shadow-lg hover:bg-[#0ea5e9] transition duration-300"
         >
-          Tải ứng dụng
+           Tải ứng dụng 
         </motion.a>
-
       </motion.div>
     </section>
   );

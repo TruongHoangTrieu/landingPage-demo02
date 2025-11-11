@@ -17,7 +17,7 @@ function HomePage() {
 
   return (
     <>
-      <Header />
+      
       <HeroSection onScrollDown={scrollToHeroIntro} />
       <div ref={heroIntroRef}>
         <Introduction />
