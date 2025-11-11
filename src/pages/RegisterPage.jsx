@@ -27,7 +27,7 @@ export default function RegisterPage() {
     },
     {
       name: "username",
-      placeholder: "Tên đăng nhập (chỉ chữ, số, gạch dưới)",
+      placeholder: "Tên tài khoản (chỉ chữ, số, gạch dưới)",
       icon: Edit,
       type: "text",
       required: true,
@@ -166,6 +166,8 @@ export default function RegisterPage() {
                       className={inputStyle}
                       required={field.required}
                       minLength={field.minLength}
+                      autoCapitalize="none"
+                      autoCorrect="off"
                       pattern={
                         field.name === "email"
                           ? "[^\\s@]+@[^\\s@]+\\.[^\\s@]+"
