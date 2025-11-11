@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { registerApi, verifyEmailApi } from "../api/register/registerApi";
+import {
+  registerApi,
+  verifyEmailApi,
+  resendOTPApi,
+} from "../api/register/registerApi";
 
 export function useRegister() {
   const [loading, setLoading] = useState(false);
@@ -24,5 +28,15 @@ export function useRegister() {
     }
   };
 
-  return { register, verifyEmail, loading };
+  const resendOTP = async (data) => {
+    setLoading(true);
+    try {
+      const response = await resendOTPApi(data);
+      return response;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { register, verifyEmail, resendOTP, loading };
 }

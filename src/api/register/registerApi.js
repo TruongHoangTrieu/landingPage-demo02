@@ -8,3 +8,7 @@ export function registerApi(data) {
 export function verifyEmailApi(data) {
   return apiClient.post({ url: apiUrl.auth.verifyEmail, data });
 }
+
+export function resendOTPApi(data) {
+  return apiClient.post({ url: apiUrl.auth.resendVerificationEmail, data });
+}
