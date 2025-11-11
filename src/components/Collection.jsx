@@ -16,9 +16,7 @@ const slides = [
     title: "Pokémon TCG",
     subtitle:
       "Thu thập, chiến đấu và khám phá thế giới Pokémon với hàng nghìn lá bài độc đáo và hiếm có.",
-    buttons: [
-
-    ],
+    buttons: [],
   },
   {
     id: 2,
@@ -29,9 +27,7 @@ const slides = [
     title: "One Piece Card Game",
     subtitle:
       "Tập hợp đồng đội, triển khai chiến lược và trở thành Vua Hải Tặc trong thế giới One Piece!",
-    buttons: [
-      
-    ],
+    buttons: [],
   },
   {
     id: 3,
@@ -42,8 +38,7 @@ const slides = [
     title: "Yu-Gi-Oh! Trading Card Game",
     subtitle:
       "Triệu hồi quái thú, kích hoạt ma pháp, tung bẫy và chiến thắng đối thủ trong đấu trường hấp dẫn nhất!",
-    buttons: [
-    ],
+    buttons: [],
   },
 ];
 
@@ -94,10 +89,9 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                 <p className="text-lg md:text-2xl font-black text-gray-200 leading-relaxed">
                   {slide.subtitle}
                 </p>
-                
               </div>
 
-              <div className="relative z-10 flex-1 flex justify-center md:justify-end">
+              <div className="relative z-10 flex-1 flex justify-center md:justify-end mt-5 mb-5">
                 <div
                   className="w-[260px] h-[360px] sm:w-[320px] sm:h-[460px] md:w-[400px] md:h-[550px] md:-translate-x-10 lg:-translate-x-16"
                   style={{ perspective: "1200px" }}
