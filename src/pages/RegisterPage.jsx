@@ -41,7 +41,7 @@ export default function RegisterPage() {
     },
     {
       name: "password",
-      placeholder: "Mật khẩu (tối thiểu 8 ký tự)",
+      placeholder: "Mật khẩu",
       icon: Lock,
       isPassword: true,
       showState: showPassword,
@@ -51,7 +51,7 @@ export default function RegisterPage() {
     },
     {
       name: "confirmPassword",
-      placeholder: "Xác nhận Mật khẩu (tối thiểu 8 ký tự)",
+      placeholder: "Xác nhận Mật khẩu",
       icon: Key,
       isPassword: true,
       showState: showConfirmPassword,
@@ -87,6 +87,14 @@ export default function RegisterPage() {
       return;
     }
 
+    // Validate password has at least one uppercase and one lowercase letter
+    const hasUpperCase = /[A-Z]/.test(data.password);
+    const hasLowerCase = /[a-z]/.test(data.password);
+    if (!hasUpperCase || !hasLowerCase) {
+      alert("Mật khẩu phải có ít nhất 1 chữ hoa và 1 chữ thường!");
+      return;
+    }
+
     // Validate password confirmation
     if (form.password.value !== form.confirmPassword.value) {
       alert("Mật khẩu xác nhận không khớp!");
@@ -113,11 +121,6 @@ export default function RegisterPage() {
     "absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400";
   const buttonStyle =
     "w-full py-3 px-4 text-lg font-bold text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 transition-colors shadow-lg mt-6";
-
-  const handleLoginLinkClick = (e) => {
-    e.preventDefault();
-    navigate("/");
-  };
 
   return (
     <div className="flex min-h-screen w-full bg-gray-900">
@@ -166,11 +169,17 @@ export default function RegisterPage() {
                       pattern={
                         field.name === "email"
                           ? "[^\\s@]+@[^\\s@]+\\.[^\\s@]+"
+                          : field.name === "password" ||
+                            field.name === "confirmPassword"
+                          ? "(?=.*[a-z])(?=.*[A-Z]).{8,}"
                           : undefined
                       }
                       title={
                         field.name === "email"
                           ? "Vui lòng nhập email hợp lệ"
+                          : field.name === "password" ||
+                            field.name === "confirmPassword"
+                          ? "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa và chữ thường"
                           : field.minLength
                           ? `Tối thiểu ${field.minLength} ký tự`
                           : undefined

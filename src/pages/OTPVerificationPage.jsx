@@ -11,7 +11,7 @@ export default function OTPVerificationPage() {
   const [resendTimer, setResendTimer] = useState(60);
   const navigate = useNavigate();
   const location = useLocation();
-  const { verifyEmail, loading } = useRegister();
+  const { verifyEmail, resendOTP } = useRegister();
 
   // Get email from navigation state
   const email = location.state?.email || "tr*****03@gmail.com";
@@ -29,6 +29,18 @@ export default function OTPVerificationPage() {
 
     if (element.value !== "" && index < OTP_LENGTH - 1) {
       inputRefs.current[index + 1].focus();
+    }
+
+    // Auto submit when all 6 digits are filled
+    if (element.value !== "" && index === OTP_LENGTH - 1) {
+      const finalOtp = [...newOtp];
+      finalOtp[index] = element.value;
+      if (finalOtp.every((digit) => digit !== "")) {
+        // Submit after a short delay to ensure state is updated
+        setTimeout(() => {
+          submitOTP(finalOtp.join(""));
+        }, 100);
+      }
     }
   };
 
@@ -50,16 +62,26 @@ export default function OTPVerificationPage() {
     }
   }, [isResendDisabled, resendTimer]);
 
-  const handleResend = () => {
-    console.log("Gửi lại mã OTP...");
-    setIsResendDisabled(true);
-    setResendTimer(60);
+  const handleResend = async () => {
+    try {
+      const response = await resendOTP({ email });
+      if (response.success) {
+        setIsResendDisabled(true);
+        setResendTimer(60);
+        alert("Mã OTP mới đã được gửi đến email của bạn!");
+      } else {
+        alert(
+          response.message || "Không thể gửi lại mã OTP. Vui lòng thử lại!"
+        );
+      }
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      alert(error.message || "Có lỗi xảy ra khi gửi lại mã OTP!");
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const finalOtp = otp.join("");
-    if (finalOtp.length !== OTP_LENGTH) {
+  const submitOTP = async (otpValue) => {
+    if (otpValue.length !== OTP_LENGTH) {
       alert("Vui lòng nhập đủ 6 số.");
       return;
     }
@@ -67,7 +89,7 @@ export default function OTPVerificationPage() {
     try {
       const response = await verifyEmail({
         email: email,
-        otp: finalOtp,
+        otp: otpValue,
       });
 
       if (response.success) {
@@ -80,6 +102,12 @@ export default function OTPVerificationPage() {
       console.error("OTP verification error:", error);
       alert(error.message || "Có lỗi xảy ra khi xác thực OTP!");
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const finalOtp = otp.join("");
+    await submitOTP(finalOtp);
   };
 
   const handleLoginRedirect = () => {
@@ -138,19 +166,11 @@ export default function OTPVerificationPage() {
               type="button"
               onClick={handleResend}
               disabled={isResendDisabled}
-              className={`font-bold ${TEXT_YELLOW} transition-opacity duration-300 disabled:opacity-50`}
+              className={`font-bold ${TEXT_YELLOW} transition-opacity duration-300 disabled:opacity-50 ml-1`}
             >
               Gửi lại {isResendDisabled && `(${resendTimer}s)`}
             </button>
           </div>
-
-          <button
-            type="submit"
-            className={`w-full py-4 text-xl font-bold text-gray-900 ${KADO_YELLOW} rounded-xl shadow-lg mt-8 transition-colors duration-200`}
-            disabled={loading}
-          >
-            {loading ? "ĐANG XÁC NHẬN..." : "XÁC NHẬN"}
-          </button>
         </form>
 
         {/* Quay lại Đăng nhập */}
