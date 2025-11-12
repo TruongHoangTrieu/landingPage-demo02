@@ -1,8 +1,6 @@
-
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Camera, TrendingUp, Users, Shield, Zap, Database } from "lucide-react";
-
 
 const ArrowRightIcon = (props) => (
   <svg
@@ -163,19 +161,19 @@ const features = [
 
 export default function BentoGridCom() {
   return (
-    <section id="features"
+    <section
+      id="features"
       className="w-full p-4 sm:p-6 lg:p-8 bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage:
-          "url('https://img.freepik.com/free-vector/gray-abstract-wireframe-background_53876-99911.jpg?semt=ais_hybrid&w=740&q=80')", // Đường dẫn ảnh nền
+        backgroundImage: "url('/bg.png')",
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-5xl font-bold text-black bg-clip-text mb-2 leading-[2.1]">
+          <h2 className="text-5xl md:text-4xl font-extrabold text-white bg-clip-text mb-1 leading-[2.1] mt-8">
             Tính năng nổi bật
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
+          <p className="text-white  text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
             Mọi thứ bạn cần để quản lý và phát triển bộ sưu tập thẻ bài của mình
           </p>
         </div>

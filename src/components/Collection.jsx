@@ -49,9 +49,9 @@ const HeroCarousel = () => {
     <div id="cards" className="relative w-full overflow-hidden bg-black">
       <div
         className="absolute top-10 left-1/2 -translate-x-1/2 
-bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-auto"
+bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-auto mt-12"
       >
-        <h2 className="text-2xl md:text-5xl font-extrabold text-white text-center">
+        <h2 className="text-2xl md:text-5xl font-extrabold text-white text-center ">
           Hỗ trợ 3 loại thẻ bài phổ biến
         </h2>
       </div>
@@ -68,7 +68,7 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
             <div
-              className="relative w-full min-h-[90vh] flex flex-col-reverse md:flex-row items-center justify-center md:justify-between px-6 md:px-16 pt-32 pb-16 md:pt-28 md:pb-0 gap-8 md:gap-0"
+              className="relative w-full min-h-[100vh] flex flex-col-reverse md:flex-row items-center justify-center md:justify-between px-6 md:px-16 pt-32 pb-16 md:pt-28 md:pb-0 gap-8 md:gap-0"
               style={{
                 backgroundImage: `url(${slide.bg})`,
                 backgroundPosition: "center center",
@@ -115,7 +115,7 @@ bg-black/20 backdrop-blur-md px-6 py-3 rounded-2xl shadow-lg z-20 w-[90%] md:w-a
                       <img
                         src={slide.card}
                         alt="Card Front"
-                        className="w-full h-full object-contain rounded-2xl pointer-events-none"
+                        className="w-full h-full object-contain rounded-2xl pointer-events-none mt-10"
                       />
                     </div>
 

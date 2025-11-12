@@ -6,6 +6,8 @@ import OTPVerificationPage from "./pages/OTPVerificationPage";
 import EmailVerificationSuccess from "./pages/EmailVerificationSuccess";
 import DowloadPage from "./pages/DowloadPage";
 import Layout from "./components/Layout";
+import FeaturesPage from "./pages/FeaturesPage";
+import CardPage from "./pages/CardPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/download" element={<DowloadPage />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/card" element ={<CardPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
