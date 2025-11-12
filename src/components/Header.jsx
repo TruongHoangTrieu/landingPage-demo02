@@ -19,10 +19,10 @@ export default function Header() {
   const menuItems = [
     {
       label: "Tính năng",
-      href: "#features",
+      href: "/features",
       icon: <Sparkles className="w-5 h-5" />,
     },
-    { label: "Thẻ bài", href: "#cards", icon: <Layers className="w-5 h-5" /> },
+    { label: "Thẻ bài", href: "/card", icon: <Layers className="w-5 h-5" /> },
   ];
 
   const toggleLoginModal = () => {
