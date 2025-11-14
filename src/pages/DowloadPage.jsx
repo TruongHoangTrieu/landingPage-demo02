@@ -6,7 +6,7 @@ const QR_CODE_URL = "/qr.png";
 const MASCOT_URL = "/kado-mascot.png";
 const BACKGROUND_IMAGE_URL = "/kado-bg.png";
 const DOWNLOAD_URL =
-  "https://api.expo.dev/v2/artifacts/eas/g1LwqbibZeAkgq9Tc2v6GA";
+  "https://api.expo.dev/v2/artifacts/eas/w9vqqvZ9586cMj3ADaiZ48";
 
 function DowloadPage() {
   const [activeTab, setActiveTab] = useState("ANDROID");
