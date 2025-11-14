@@ -93,35 +93,9 @@ export default function Footer2() {
           </span>
         </div>
 
-        <nav className="mb-6 w-full">
-          <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-base font-medium">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-gray-900 dark:after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        
 
-        <div className="my-6 flex flex-wrap justify-center gap-4 text-sm">
-          {socialIcons.map((icon) => (
-            <a
-              key={icon.name}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={icon.name}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-              href={icon.href}
-            >
-              {icon.svg}
-            </a>
-          ))}
-        </div>
+      
 
         <p className="text-center text-xs text-gray-500 dark:text-gray-500 mt-4">
           &copy; {new Date().getFullYear()} KĀDO. All rights reserved.

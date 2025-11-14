@@ -25,7 +25,6 @@ function HomePage() {
       <Collection />
       <FeaturesSection />
       <DownloadSection />
-      <Footer2 />
     </>
   );
 }
